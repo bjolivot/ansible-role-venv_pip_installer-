@@ -1,0 +1,27 @@
+---
+# here comes the real playbook, executed after env check
+
+- name: install apt dependency
+  apt: 
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ venv_apt_dependencies }}"
+
+- name: update pip in venv
+  pip:
+    name: pip
+    state: latest
+    virtualenv: "{{ venv_path}}"
+    virtualenv_python: "{{ venv_python }}"
+
+
+- name: deploy pip packages in venv
+  pip: 
+    name: "{{ item }}"
+    state: latest
+    virtualenv: "{{ venv_path}}"
+    virtualenv_python: "{{ venv_python }}"
+    extra_args: "{{ venv_pip_extra_args }}"
+  with_items: "{{ venv_pip_packages }}"
+
+

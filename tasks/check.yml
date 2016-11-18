@@ -1,0 +1,10 @@
+---
+
+##check variable set
+- fail: msg="Variable '{{ item }}' is not defined"
+  tags: check
+  when: item not in vars
+  with_items: 
+    - venv_path
+    - venv_python
+    - venv_pip_packages
